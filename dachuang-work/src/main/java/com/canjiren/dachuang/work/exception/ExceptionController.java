@@ -38,7 +38,7 @@ public class ExceptionController{
 
     @ExceptionHandler(value = Throwable.class)
     public R handleException(Throwable throwable){
-
+        log.error(throwable.getMessage());
         return R.error(BizCodeEnume.UNKNOW_EXCEPTION.getCode(),BizCodeEnume.UNKNOW_EXCEPTION.getMsg());
 
     }
