@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.canjiren.dachuang.work.mapper.UserMapper">
+
+    <select id="produce" resultType="com.canjiren.dachuang.work.entity.User">
+SELECT
+	`name`,
+	SUM( money1 ) AS money,
+	id,
+	`online`
+FROM
+	(
+	SELECT
+		c.menoy AS money1,
+		u.`name`,
+		u.id,
+		u.`online`
+	FROM
+		USER u
+	LEFT JOIN produce c ON c.user_id = u.id
+	where id  = #{id}
+	)
+as a GROUP BY `name`
+    </select>
+	<select id="consume" resultType="com.canjiren.dachuang.work.entity.User">
+SELECT
+	`name`,
+	SUM( money1 ) AS money,
+	id,
+	`online`
+FROM
+	(
+	SELECT
+		c.menoy AS money1,
+		u.`name`,
+		u.id,
+		u.`online`
+	FROM
+		USER u
+		LEFT JOIN consume c ON c.user_id = u.id
+		where id  = #{id}
+	) AS a
+GROUP BY
+	`name`
+	</select>
+</mapper>
